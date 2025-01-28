@@ -13,11 +13,3 @@ main.py file is the root of this app
 thanks :)))
 
 
-
-//according to google documentation
-- mediapipe 0.8.9
-- OpenCV 4.5.4 or Later
-- Tensorflow 2.7.0 or Later
-- scikit-learn 1.0.1 or Later (Only if you want to display the confusion matrix) 
-- matplotlib 3.5.0 or Later (Only if you want to display the confusion matrix)
-
