@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facial Emotion Recognition</title>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        img {
+            margin-top: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Facial Emotion Recognition</h1>
+    <p id="emotion-id">Emotion ID: </p>
+    <img id="frame" src="" alt="Live Frame" width="780" height="780">
+    
+    <script>
+        // Establish a WebSocket connection
+        var socket = io.connect('http://localhost:5000');
+
+        // Handle successful connection
+        socket.on('connect', function() {
+            console.log('Connected to WebSocket');
+            socket.emit('start_processing');
+        });
+
+        // Listen for emotion_data event from the server
+        socket.on('emotion_data', function(data) {
+            console.log('Received data:', data);
+
+            // Update the emotion ID
+            document.getElementById('emotion-id').innerText = 'Emotion ID: ' + data.emotion_id;
+
+            // Update the live frame
+            var image = document.getElementById('frame');
+            image.src = 'data:image/jpeg;base64,' + data.image;  // Set the image src
+        });
+
+        // Handle connection errors
+        socket.on('connect_error', function(error) {
+            console.error('Connection error:', error);
+        });
+    </script>
+</body>
+</html>
